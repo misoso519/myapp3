@@ -49,6 +49,6 @@ test:
 #
 production:
   adapter: mysql2
-  url: <%= ENV['JAWSDB_URL'] %>
+  encoding: utf8mb4
   pool: 5
-  url: <%= ENV["DATABASE_URL"] %>
+  url: <%= ENV['JAWSDB_URL'] %>
