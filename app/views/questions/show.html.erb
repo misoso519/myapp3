@@ -1,0 +1,69 @@
+<h1><%= @question.title %></h1>
+
+<% if @question.image.present? %>
+  <p><%= image_tag @question.image.url, alt: "質問画像", class: "img-fluid" %></p>
+<% end %>
+
+<% if @question.video.present? %>
+  <p>
+    <video controls class="img-fluid">
+      <source src="<%= @question.video.url %>" type="video/mp4">
+      お使いのブラウザは動画タグをサポートしていません。
+    </video>
+  </p>
+<% end %>
+
+<p><%= @question.body %></p>
+
+<hr>
+
+<h2>回答一覧</h2>
+<% if @question.answers.any? %>
+  <ul>
+    <% @question.answers.each do |answer| %>
+      <li>
+        <p><%= answer.body %></p>
+
+        <% if answer.image.present? %>
+          <p><%= image_tag answer.image.url, alt: "回答画像", class: "img-fluid" %></p>
+        <% end %>
+
+        <% if answer.video.present? %>
+          <p>
+            <video controls class="img-fluid">
+              <source src="<%= answer.video.url %>" type="video/mp4">
+              お使いのブラウザは動画タグをサポートしていません。
+            </video>
+          </p>
+        <% end %>
+
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>まだ回答はありません。</p>
+<% end %>
+
+<hr>
+
+<h2>回答を投稿する</h2>
+<%= form_with(model: [@question, Answer.new], local: true, html: { multipart: true }) do |f| %>
+  <div class="field">
+    <%= f.label :body, "回答内容" %><br>
+    <%= f.text_area :body, class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :image, "画像をアップロード" %><br>
+    <%= f.file_field :image, class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :video, "動画をアップロード" %><br>
+    <%= f.file_field :video, class: "form-control", accept: "video/*" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "回答を投稿", class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -1,0 +1,31 @@
+<h2>アカウント編集</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { multipart: true }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :name, "名前" %><br>
+    <%= f.text_field :name, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :bio, "自己紹介" %><br>
+    <%= f.text_area :bio %>
+  </div>
+
+  <div class="field">
+    <%= f.label :profile_image, "プロフィール画像" %><br>
+    <%= f.file_field :profile_image %>
+    <% if resource.profile_image? %>
+      <p>現在の画像:</p>
+      <%= image_tag resource.profile_image.url, alt: "Profile Image", width: 150 %>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "更新する" %>
+  </div>
+<% end %>
+
+<h3>アカウント削除</h3>
+<%= button_to "アカウント削除", registration_path(resource_name), data: { confirm: "本当に削除しますか？" }, method: :delete %>

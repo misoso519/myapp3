@@ -1,0 +1,13 @@
+<h1><%= @category.name %> の投稿一覧</h1>
+
+<% if @questions.any? %>
+  <ul>
+    <% @questions.each do |question| %>
+      <li>
+        <%= link_to question.title, question_path(question) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>このカテゴリにはまだ投稿がありません。</p>
+<% end %>

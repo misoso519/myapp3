@@ -1,0 +1,45 @@
+<h1>新規質問の投稿</h1>
+
+<%= form_with(model: @question, local: true, html: { multipart: true }) do |f| %>
+  <% if @question.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@question.errors.count, "error") %> が発生しています:</h2>
+      <ul>
+      <% @question.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title, "タイトル" %><br>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :body, "内容" %><br>
+    <%= f.text_area :body, class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :category_id, "カテゴリ" %><br>
+    <%= f.collection_select :category_id, @categories, :id, :name, prompt: "カテゴリを選択", class: "form-control" %>
+  </div>
+
+  <!-- 画像アップロードフィールド -->
+  <div class="field">
+    <%= f.label :image, "画像をアップロード" %><br>
+    <%= f.file_field :image, class: "form-control" %>
+  </div>
+
+  <!-- 動画アップロードフィールド -->
+  <div class="field">
+    <%= f.label :video, "動画をアップロード" %><br>
+    <%= f.file_field :video, class: "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "投稿する", class: "btn btn-primary" %>
+  </div>
+<% end %>
