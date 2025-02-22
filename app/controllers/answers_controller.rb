@@ -1,5 +1,8 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_question
+  before_action :set_answer, only: [:update, :destroy]
+  before_action :authorize_user!, only: [:update, :destroy]
 
   def create
     @answer = @question.answers.build(answer_params)
@@ -28,11 +31,17 @@ class AnswersController < ApplicationController
   private
 
   def set_question
-    @question = Question.find(params[:question_id])
+    @question = Question.find_by(id: params[:question_id])
+    unless @question
+      redirect_to questions_path, alert: "質問が見つかりません。"
+    end
   end
 
   def set_answer
-    @answer = @question.answers.find(params[:id])
+    @answer = @question.answers.find_by(id: params[:id])
+    unless @answer
+      redirect_to @question, alert: "回答が見つかりません。"
+    end
   end
 
   def answer_params
@@ -40,6 +49,8 @@ class AnswersController < ApplicationController
   end
 
   def authorize_user!
-    redirect_to @question, alert: '権限がありません。' unless @answer.user == current_user
+    unless @answer&.user == current_user
+      redirect_to @question, alert: "権限がありません。"
+    end
   end
 end

@@ -1,6 +1,5 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_question, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -11,7 +10,6 @@ class QuestionsController < ApplicationController
     end
   end
   
-
   def show
     @answer = Answer.new
   end
@@ -50,14 +48,17 @@ class QuestionsController < ApplicationController
   end  
 
   def search
-    @questions = Question.search(params[:query])
+    @questions = Question.search(params[:q])
     render :index
   end
 
   private
 
   def set_question
-    @question = Question.find(params[:id])
+    @question = Question.find_by(id: params[:id])
+    unless @question
+      redirect_to questions_path, alert: "質問が見つかりません。"
+    end
   end
 
   def question_params
@@ -65,7 +66,8 @@ class QuestionsController < ApplicationController
   end
 
   def authorize_user!
-    # 投稿者のみが編集・削除できるようにする
-    redirect_to @question, alert: '権限がありません。' unless @question.user == current_user
+    unless @question&.user == current_user
+      redirect_to questions_path, alert: "権限がありません。"
+    end
   end
 end
