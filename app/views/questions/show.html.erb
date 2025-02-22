@@ -1,21 +1,20 @@
 <h1><%= @question.title %></h1>
 <p><%= @question.body %></p>
+
 <% if @question.image.present? %>
   <p><%= image_tag @question.image.url, alt: "質問画像", class: "img-fluid" %></p>
 <% end %>
 
 <% if @question.video.present? %>
   <p>
-      <%= video_tag @question.video.url, controls: true, class: "img-fluid" %>
+    <%= video_tag @question.video.url, controls: true, class: "img-fluid", fallback_message: "動画の再生に対応していません。" %>
   </p>
 <% end %>
 
-
-    <% if @question.user == current_user %>
-      <%= link_to '編集', edit_question_path(@question), class: "btn btn-secondary" %>
-      <%= link_to '削除', @question, method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-danger" %>
-    <% end %>
-
+<% if @question.user == current_user %>
+  <%= link_to '編集', edit_question_path(@question), class: "btn btn-secondary" %>
+  <%= link_to '削除', @question, method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-danger" %>
+<% end %>
 
 <hr>
 
@@ -32,21 +31,20 @@
 
         <% if answer.video.present? %>
           <p>
-            <%= video_tag answer.video.url, controls: true, class: "img-fluid" %>
+            <%= video_tag answer.video.url, controls: true, class: "img-fluid", fallback_message: "動画の再生に対応していません。" %>
           </p>
         <% end %>
-
 
         <% if answer.user == current_user %>
           <%= link_to '編集', edit_question_answer_path(answer.question, answer), class: "btn btn-secondary" %>
           <%= link_to '削除', question_answer_path(answer.question, answer), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-danger" %>
         <% end %>
 
-        </li>
+      </li>
     <% end %>
   </ul>
 <% else %>
-  <p>まだ回答はありません。</p>
+  <p class="alert alert-info">まだ回答はありません。</p>
 <% end %>
 
 <hr>
