@@ -58,4 +58,9 @@ class QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(:title, :body, :category_id, :image, :video)
   end
+
+  def authorize_user!
+    # 投稿者のみが編集・削除できるようにする
+    redirect_to @question, alert: '権限がありません。' unless @question.user == current_user
+  end
 end
