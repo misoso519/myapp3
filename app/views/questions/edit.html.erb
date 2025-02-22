@@ -24,6 +24,7 @@
 
   <div class="form-group">
     <%= f.label :image, "画像（任意）" %><br>
+    <%# CarrierWave を使用している場合は `attached?` ではなく `image?` を使います。 %>
     <% if @question.image? %>
       <p>
         <%= image_tag @question.image.url, alt: "現在の画像", class: "img-fluid" %>
