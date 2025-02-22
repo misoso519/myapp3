@@ -7,8 +7,7 @@
 <% if @question.video.present? %>
   <p>
     <video controls class="img-fluid">
-      <source src="<%= @question.video.url %>" type="video/mp4">
-      お使いのブラウザは動画タグをサポートしていません。
+      <%= video_tag @question.video.url, controls: true, class: "img-fluid" %>
     </video>
   </p>
 <% end %>
@@ -30,14 +29,11 @@
 
         <% if answer.video.present? %>
           <p>
-            <video controls class="img-fluid">
-              <source src="<%= answer.video.url %>" type="video/mp4">
-              お使いのブラウザは動画タグをサポートしていません。
-            </video>
+            <%= video_tag answer.video.url, controls: true, class: "img-fluid" %>
           </p>
         <% end %>
 
-      </li>
+        </li>
     <% end %>
   </ul>
 <% else %>
