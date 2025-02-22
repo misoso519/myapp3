@@ -4,9 +4,13 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
 
   def index
-    @questions = Question.all.order(created_at: :desc)
-    @questions = Question.search(params[:q]).order(created_at: :desc)
+    if params[:q].present?
+      @questions = Question.search(params[:q]).order(created_at: :desc)
+    else
+      @questions = Question.all.order(created_at: :desc)
+    end
   end
+  
 
   def show
     @answer = Answer.new
@@ -28,7 +32,7 @@ class QuestionsController < ApplicationController
   end
 
   def edit
-    # 権限チェックなど
+    authorize_user!
   end
 
   def update
@@ -40,9 +44,10 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
+    authorize_user!
     @question.destroy
     redirect_to questions_path, notice: "質問が削除されました。"
-  end
+  end  
 
   def search
     @questions = Question.search(params[:query])
