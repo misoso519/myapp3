@@ -24,9 +24,9 @@
 
   <div class="form-group">
     <%= f.label :image, "画像（任意）" %><br>
-    <% if @question.image.attached? %>
+    <% if @question.image? %>
       <p>
-        <%= image_tag @question.image, alt: "現在の画像", class: "img-fluid" %>
+        <%= image_tag @question.image.url, alt: "現在の画像", class: "img-fluid" %>
       </p>
     <% end %>
     <%= f.file_field :image, class: "form-control" %>
@@ -34,9 +34,9 @@
 
   <div class="form-group">
     <%= f.label :video, "動画（任意）" %><br>
-    <% if @question.video.attached? %>
+    <% if @question.video? %>
       <p>
-        <%= video_tag @question.video, controls: true, class: "img-fluid" %>
+        <%= video_tag @question.video.url, controls: true, class: "img-fluid" %>
       </p>
     <% end %>
     <%= f.file_field :video, class: "form-control", accept: "video/*" %>
