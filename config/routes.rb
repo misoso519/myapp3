@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   # 質問・回答
   resources :categories, only: [:index, :show]
   resources :questions do
-    resources :answers, only: [:edit, :create, :destroy]
+    resources :answers, only: [:edit, :create, :destroy, :update]
   end
 
   # Devise のログアウトは DELETE メソッドを使用
