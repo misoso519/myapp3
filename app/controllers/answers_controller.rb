@@ -16,8 +16,10 @@ class AnswersController < ApplicationController
   end
 
   def edit
+    @question = Question.find_by(id: params[:question_id])
+    @answer = Answer.find_by(id: params[:id])
   end
-  
+
   def update
     if @answer.update(answer_params)
       redirect_to @question, notice: '回答を更新しました。'
