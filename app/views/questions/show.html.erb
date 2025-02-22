@@ -1,5 +1,5 @@
 <h1><%= @question.title %></h1>
-
+<p><%= @question.body %></p>
 <% if @question.image.present? %>
   <p><%= image_tag @question.image.url, alt: "質問画像", class: "img-fluid" %></p>
 <% end %>
