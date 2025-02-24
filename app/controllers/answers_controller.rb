@@ -33,8 +33,7 @@ class AnswersController < ApplicationController
     redirect_to @question, notice: '回答を削除しました。'
   end
 
-  class AnswersController < ApplicationController
-    def show
+  def show
       @question = Question.find(params[:question_id])
       @answer = @question.answers.find(params[:id])
     end
