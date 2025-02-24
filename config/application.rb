@@ -4,11 +4,9 @@ require "rails/all"
 require 'dotenv'
 Dotenv.load
 
-
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
-
 
 module Myapp
   class Application < Rails::Application
@@ -27,8 +25,10 @@ module Myapp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Move importmap configuration inside the Application class
+    config.importmap.draw do
+      pin "@hotwired/turbo-rails"
+    end  
   end
-  config.importmap.draw do
-    pin "@hotwired/turbo-rails"
-  end  
 end
