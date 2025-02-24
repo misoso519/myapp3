@@ -63,3 +63,6 @@ gem "importmap-rails", "~> 0.8.0"
 gem "devise"
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'fog-aws'
+gem "dotenv-rails", "~> 3.1"
+gem 'aws-sdk-s3', require: false
