@@ -34,8 +34,12 @@ class AnswersController < ApplicationController
   end
 
   def show
-      @question = Question.find(params[:question_id])
-      @answer = @question.answers.find(params[:id])
+    @answer = Answer.find(params[:id])
+  
+    respond_to do |format|
+      format.html # show.html.erb があるか確認
+      format.json { render json: @answer }
+    end
   end
 
   private
