@@ -29,10 +29,16 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer.destroy
-    redirect_to @question, notice: '回答を削除しました。'
+    Rails.logger.info("Attempting to delete answer #{@answer.id} by user #{current_user.id}")
+    if @answer.destroy
+      Rails.logger.info("Answer #{@answer.id} successfully deleted")
+      redirect_to question_path(@question), notice: '回答を削除しました。'
+    else
+      Rails.logger.error("Failed to delete answer #{@answer.id}")
+      redirect_to question_path(@question), alert: '削除に失敗しました。'
+    end
   end
-
+  
   def show
     @answer = Answer.find(params[:id])
   
@@ -64,6 +70,7 @@ class AnswersController < ApplicationController
 
   def authorize_user!
     unless @answer&.user == current_user
+      Rails.logger.info("Unauthorized user: #{current_user&.id} tried to delete answer #{@answer&.id}")
       redirect_to @question, alert: "権限がありません。"
     end
   end
