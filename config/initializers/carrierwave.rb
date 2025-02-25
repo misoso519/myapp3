@@ -7,6 +7,6 @@ CarrierWave.configure do |config|
     aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
   }
   config.fog_directory  = ENV['S3_BUCKET_NAME']
-  config.asset_host     = "https://#{ENV['S3_BUCKET_NAME']}.s3.amazonaws.com"
+  config.asset_host     = "https://#{ENV['S3_BUCKET_NAME']}.s3.ap-northeast-1.amazonaws.com"
   config.cache_storage  = :fog
 end
