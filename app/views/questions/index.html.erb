@@ -3,14 +3,6 @@
 <!-- 質問投稿ボタン -->
 <%= link_to "質問を投稿", new_question_path, class: "btn btn-primary" %>
 
-<!-- 検索フォーム -->
-<%= form_with(url: questions_path, method: :get, local: true, class: "flex mt-4") do %>
-  <input type="text" name="query" value="<%= params[:query] %>" placeholder="Search..." class="p-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-  <button type="submit" class="p-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-700">
-    Search
-  </button>
-<% end %>
-
 <!-- 検索結果メッセージ -->
 <% if params[:query].present? %>
   <h2 class="mt-4">「<%= params[:query] %>」の検索結果</h2>
