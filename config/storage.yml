@@ -13,5 +13,4 @@ amazon:
   bucket: <%= ENV['AWS_S3_BUCKET'] %>
   upload:
     cache_control: 'public, max-age=31536000'
-  endpoint: https://myapp3-bucket2.s3.ap-southeast-1.amazonaws.com
-  
+  endpoint: https://myapp3-bucket2.s3.ap-ap-northeast-1.amazonaws.com

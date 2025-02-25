@@ -1,7 +1,7 @@
 require 'aws-sdk-s3'
 
 class UploadToS3
-  def initialize(region: 'ap-southeast-1', bucket_name: 'myapp3-bucket2')
+  def initialize(region: 'ap-northeast-1', bucket_name: 'myapp3-bucket2')
     @s3 = Aws::S3::Resource.new(region: region)
     @bucket = @s3.bucket(bucket_name)
   end
