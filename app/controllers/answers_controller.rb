@@ -7,7 +7,8 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
-
+    
+    Rails.logger.info("Question ID: #{@question.id}") # 追加
     if @answer.save
       redirect_to @question, notice: "回答が投稿されました。"
     else
