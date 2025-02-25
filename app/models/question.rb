@@ -12,5 +12,4 @@ class Question < ApplicationRecord
   scope :search, ->(query) {
     where("title ILIKE ? OR body ILIKE ?", "%#{query}%", "%#{query}%") if query.present?
   }
-  end
 end
