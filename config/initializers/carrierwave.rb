@@ -10,4 +10,5 @@ CarrierWave.configure do |config|
   config.asset_host     = "https://#{ENV['S3_BUCKET_NAME']}.s3.ap-northeast-1.amazonaws.com"
   config.cache_storage  = :fog
   config.fog_attributes = { cache_control: "public, max-age=#{365.days.to_i}" }
+  config.fog_public     = false
 end
