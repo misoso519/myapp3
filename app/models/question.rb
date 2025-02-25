@@ -8,12 +8,9 @@ class Question < ApplicationRecord
 
   validates :title, presence: true
   validates :body, presence: true
-  
-  def self.search(query)
-    if query.present?
-      where("title LIKE :query OR body LIKE :query", query: "%#{query}%")
-    else
-      all
-    end
+
+  scope :search, ->(query) {
+    where("title ILIKE ? OR body ILIKE ?", "%#{query}%", "%#{query}%") if query.present?
+  }
   end
 end
