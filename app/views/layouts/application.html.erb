@@ -28,12 +28,12 @@
 
         <!-- 検索フォーム -->
         <div class="search-form">
-        <%= form_with(url: questions_path, method: :get, local: true, class: "flex") do %>
-          <input type="text" name="q" placeholder="Search..." class="p-2 rounded-l-md border-none focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <button type="submit" class="p-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-700">
-            Search
-          </button>
-        <% end %>
+          <%= form_with(url: questions_path, method: :get, local: true, class: "flex") do %>
+            <input type="text" name="q" placeholder="Search..." class="p-2 rounded-l-md border-none focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button type="submit" class="p-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-700">
+              Search
+            </button>
+          <% end %>
         </div>
 
         <!-- ナビゲーションリンク（ログイン、新規登録、カテゴリ一覧、質問登録） -->
@@ -42,8 +42,11 @@
           <%= link_to "Ask Question", new_question_path, class: "text-white" %>
 
           <% if user_signed_in? %>
-            <p>Welcome, <%= current_user.name %>!</p>
-            <%= link_to 'Log Out', destroy_user_session_path, data: { turbo_method: :delete }, class: "ml-4 text-white" %>
+            <div class="flex items-center space-x-4">
+              <!-- ユーザー名をクリック可能に -->
+              <%= link_to current_user.name, edit_user_registration_path, class: "text-white font-bold hover:underline" %>
+              <%= link_to 'Log Out', destroy_user_session_path, data: { turbo_method: :delete }, class: "ml-4 text-white" %>
+            </div>
           <% else %>
             <%= link_to "Log In", new_user_session_path, class: "ml-4 text-white" %> |
             <%= link_to "Sign Up", new_user_registration_path, class: "ml-4 text-white" %>
