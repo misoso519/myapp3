@@ -59,7 +59,7 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "importmap-rails", "~> 0.8.0"
+gem "importmap-rails", "~> 2.1.0"
 gem "devise"
 gem 'carrierwave'
 gem 'mini_magick'
