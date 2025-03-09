@@ -57,5 +57,14 @@
 
     <%= yield %>
 
+    <footer class="bg-gray-100 py-4 text-center fixed bottom-0 w-full">
+      <div class="container mx-auto">
+        <ul class="flex justify-center space-x-4">
+          <li><%= link_to "お問い合わせ", contact_path, class: "text-blue-500 hover:underline" %></li>
+          <li><%= link_to "利用規約", terms_path, class: "text-blue-500 hover:underline" %></li>
+          <li><%= link_to "プライバシーポリシー", privacy_path, class: "text-blue-500 hover:underline" %></li>
+        </ul>
+      </div>
+    </footer>
   </body>
 </html>

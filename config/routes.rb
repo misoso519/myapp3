@@ -24,6 +24,11 @@ Rails.application.routes.draw do
   # ヘルスチェック
   get "up", to: "rails/health#show", as: :rails_health_check
 
+  get 'contact', to: 'pages#contact'
+  get 'terms', to: 'pages#terms'
+  get 'privacy', to: 'pages#privacy'
+  resources :contacts, only: [:create]
+
   # ルートページ
   root "questions#index"
 end
