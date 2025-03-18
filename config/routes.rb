@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    sessions: 'devise/sessions',
+    password: 'devise/passwords'
   }
 
   # PWA 関連
@@ -16,11 +18,6 @@ Rails.application.routes.draw do
     resources :answers, only: [:edit, :create, :destroy, :update, :show]
   end
 
-  # Devise のログアウトは DELETE メソッドを使用
-  devise_scope :user do
-    delete '/users/sign_out', to: 'devise/sessions#destroy'
-  end
-
   # ヘルスチェック
   get "up", to: "rails/health#show", as: :rails_health_check
 
@@ -28,6 +25,7 @@ Rails.application.routes.draw do
   get 'terms', to: 'pages#terms'
   get 'privacy', to: 'pages#privacy'
   resources :contacts, only: [:create]
+  get 'how_to_use', to: 'pages#how_to_use'
 
   # ルートページ
   root "questions#index"

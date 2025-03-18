@@ -14,7 +14,10 @@
 
 <% if @question.user == current_user %>
   <%= link_to '編集', edit_question_path(@question), class: "btn btn-secondary" %>
-  <%= link_to '削除', @question, data: { confirm: '本当に削除しますか？', turbo_method: :delete }, class: "btn btn-danger" %>
+  <%= link_to '削除', @question, 
+  method: :delete, 
+  data: { confirm: '本当に削除しますか？', turbo: false }, 
+  class: "btn btn-danger" %>
 <% end %>
 
 <hr>
