@@ -18,8 +18,24 @@
     <%= f.file_field :profile_image, class: "w-full p-2 border rounded" %>
     <% if resource.profile_image? %>
       <p class="mt-2">現在の画像:</p>
-      <%= image_tag resource.profile_image.url, alt: "Profile Image", width: 150, class: "rounded-full mt-2" %>
+      <%= image_tag resource.profile_image.url, alt: "Profile Image", width: 150, class: "rounded-full mt-2" if resource.profile_image? %>
     <% end %>
+  </div>
+
+  <h3>パスワード変更</h3>
+  <div class="field">
+    <%= f.label :password, "新しいパスワード" %>（空欄のままなら変更しません）<br />
+    <%= f.password_field :password, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation, "パスワード確認" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :current_password, "現在のパスワード（必須）" %><br />
+    <%= f.password_field :current_password, autocomplete: "current-password" %>
   </div>
 
   <div class="actions">
