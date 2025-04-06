@@ -16,6 +16,10 @@ Rails.application.routes.draw do
   resources :categories, only: [:index, :show]
   resources :questions do
     resources :answers, only: [:edit, :create, :destroy, :update, :show]
+    resources :likes, only: [:create, :destroy], defaults: { likeable: 'question'}
+  end
+  resources :answers do
+    resources :likes, only: [:create, :destroy], defaults: { likeable: 'answer' }
   end
 
   # ヘルスチェック
