@@ -46,7 +46,7 @@
           <% if user_signed_in? %>
             <div class="flex items-center space-x-4">
               <!-- ユーザー名をクリック可能に -->
-              <%= link_to current_user.name, edit_user_registration_path, class: "text-white font-bold hover:underline" %>
+              <%= link_to current_user.name, user_path(current_user), class: "text-white font-bold hover:underline" %>
               <%= link_to 'Log Out', destroy_user_session_path, method: :get, data: { confirm: '本当にログアウトしますか？' }, class: "ml-4 text-white" %>
             </div>
           <% else %>

@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
+  get "users/show"
   devise_for :users, controllers: {
     registrations: 'users/registrations',
     sessions: 'devise/sessions',
     password: 'devise/passwords'
   }
+  resources :users, only: [:show]
 
   # PWA 関連
   get "service-worker", to: "rails/pwa#service_worker", as: :pwa_service_worker
