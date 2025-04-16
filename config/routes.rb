@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   # 検索
   get "search", to: "questions#search", as: :search
+  get 'rankings/answer_likes', to: 'rankings#answer_likes', as: :answer_likes_ranking
 
   # 質問・回答
   resources :categories, only: [:index, :show]
