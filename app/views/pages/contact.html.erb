@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせ</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
+        h1, h2 { color: #333; }
+        form { max-width: 500px; margin-top: 20px; }
+        label, input, textarea { display: block; width: 100%; margin-bottom: 10px; }
+        input, textarea { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        button { background-color: #007bff; color: white; padding: 10px; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>お問い合わせ</h1>
+    <p>ご質問やご意見がございましたら、以下のフォームよりお問い合わせください。</p>
+    
+    <%= form_with url: contacts_path, method: :post, local: true do |f| %>
+      <label for="name">お名前</label>
+      <%= f.text_field :name, required: true %>
+    
+      <label for="email">メールアドレス</label>
+      <%= f.email_field :email, required: true %>
+    
+      <label for="message">お問い合わせ内容</label>
+      <%= f.text_area :message, rows: 5, required: true %>
+    
+      <button type="submit">送信</button>
+    <% end %>
+
+    <h2>お問い合わせ窓口</h2>
+    <p><strong>運営者名</strong>：◯◯◯◯（※適宜変更）</p>
+    <p><strong>メールアドレス</strong>：contact@example.com（※適宜変更）</p>
+</body>
+</html>
+

@@ -29,7 +29,7 @@
         <!-- 検索フォーム -->
         <div class="search-form">
           <%= form_with(url: questions_path, method: :get, local: true, class: "flex") do %>
-            <input type="text" name="query" placeholder="Search..." class="p-2 rounded-l-md border-none focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="text" name="q" placeholder="Search..." class="p-2 rounded-l-md border-none focus:outline-none focus:ring-2 focus:ring-blue-500">
             <button type="submit" class="p-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-700">
               Search
             </button>
@@ -38,12 +38,17 @@
 
         <!-- ナビゲーションリンク（ログイン、新規登録、カテゴリ一覧、質問登録） -->
         <div class="nav-links flex space-x-4">
+          <%= link_to "使い方", how_to_use_path, class: "text-white" %> |
+
           <%= link_to "Categories", categories_path, class: "text-white" %> |
           <%= link_to "Ask Question", new_question_path, class: "text-white" %>
 
           <% if user_signed_in? %>
-            <p>Welcome, <%= current_user.name %>!</p>
-            <%= link_to 'Log Out', destroy_user_session_path, data: { turbo_method: :delete }, class: "ml-4 text-white" %>
+            <div class="flex items-center space-x-4">
+              <!-- ユーザー名をクリック可能に -->
+              <%= link_to current_user.name, user_path(current_user), class: "text-white font-bold hover:underline" %>
+              <%= link_to 'Log Out', destroy_user_session_path, method: :get, data: { confirm: '本当にログアウトしますか？' }, class: "ml-4 text-white" %>
+            </div>
           <% else %>
             <%= link_to "Log In", new_user_session_path, class: "ml-4 text-white" %> |
             <%= link_to "Sign Up", new_user_registration_path, class: "ml-4 text-white" %>
@@ -52,7 +57,26 @@
       </div>
     </header>
 
-    <%= yield %>
+    <div class="flex flex-1 container mx-auto mt-6 px-4">
+    <!-- メインコンテンツ -->
+    <main class="w-full md:w-3/4 lg:w-4/5">
+      <%= yield %>
+    </main>
 
+    <!-- サイドバー（右側） -->
+    <aside class="md:w-1/4 lg:w-1/5 ml-4">
+      <%= render 'shared/best_answer_ranking' %>
+    </aside>
+  </div>
+
+    <footer class="bg-gray-100 py-4 text-center mt-auto">
+      <div class="container mx-auto">
+        <ul class="flex justify-center space-x-4">
+          <li><%= link_to "お問い合わせ", contact_path, class: "text-blue-500 hover:underline" %></li>
+          <li><%= link_to "利用規約", terms_path, class: "text-blue-500 hover:underline" %></li>
+          <li><%= link_to "プライバシーポリシー", privacy_path, class: "text-blue-500 hover:underline" %></li>
+        </ul>
+      </div>
+    </footer>
   </body>
 </html>

@@ -1,0 +1,15 @@
+<div class="bg-white rounded-lg shadow p-4 mb-4">
+  <h2 class="text-lg font-semibold mb-3">🏆 ベストアンサーランキング</h2>
+
+  <% @sidebar_ranking_users.each_with_index do |user, index| %>
+    <div class="flex justify-between mb-2">
+      <span>
+        <%= "#{index + 1}. " %>
+        <%= link_to user.name, user_path(user), class: "text-blue-600 hover:underline" %>
+      </span>
+      <span class="text-sm text-gray-500">
+        ❤️ <%= user.likes_count %>
+      </span>
+    </div>
+  <% end %>
+</div>
