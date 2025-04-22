@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :load_best_answer_rankinng
   protect_from_forgery with: :null_session, if: -> { request.format.json? }
+  before_action :set_global_search_data
 
   protected
 
@@ -19,5 +20,10 @@ class ApplicationController < ActionController::Base
       .select("users.*, COUNT(likes.id) AS likes_count")
       .order("likes_count DESC")
       .limit(5)
+  end
+
+  def set_global_search_data
+    @categories = Category.all
+    @questions = Question.all
   end
 end
