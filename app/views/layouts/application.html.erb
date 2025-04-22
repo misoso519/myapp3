@@ -14,7 +14,19 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js" defer></script>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+    <style>
+      .awesomplete > ul > li {
+        color: black; /* テキストの色を黒に */
+      }
+
+      .awesomplete > ul > li:hover {
+        background-color: #9ca3af; /* grey-400 */
+      }
+    </style>
   </head>
 
   <body class="bg-gray-100">
@@ -29,18 +41,21 @@
 
         <!-- 検索フォーム -->
         <div class="search-form">
-          <%= form_with(url: questions_path, method: :get, local: true, class: "flex") do %>
-            <input type="text" name="q" placeholder="Search..." class="p-2 rounded-l-md border-none focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <%= form_with(url: questions_path, method: :get, local: true, class: "flex", data: { turbo: false }) do %>
+            <input id="search-input" type="text" name="q" value="<%= params[:q] %>" placeholder="Search..."
+                  autocomplete="on"
+                  class="awesomplete p-2 rounded-l-md border-none focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                  style="color: black;" 
+                  data-list="<%= @categories.map(&:name).join(', ') %>, <%= @questions.map(&:title).join(', ') %>" />
             <button type="submit" class="p-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-700">
               Search
             </button>
-          <% end %>
+          <% end %>        
         </div>
 
         <!-- ナビゲーションリンク（ログイン、新規登録、カテゴリ一覧、質問登録） -->
         <div class="nav-links flex space-x-4">
           <%= link_to "使い方", how_to_use_path, class: "text-white" %> |
-
           <%= link_to "Categories", categories_path, class: "text-white" %> |
           <%= link_to "Ask Question", new_question_path, class: "text-white" %>
 
@@ -59,16 +74,16 @@
     </header>
 
     <div class="flex flex-1 container mx-auto mt-6 px-4">
-    <!-- メインコンテンツ -->
-    <main class="w-full md:w-3/4 lg:w-4/5">
-      <%= yield %>
-    </main>
+      <!-- メインコンテンツ -->
+      <main class="w-full md:w-3/4 lg:w-4/5">
+        <%= yield %>
+      </main>
 
-    <!-- サイドバー（右側） -->
-    <aside class="md:w-1/4 lg:w-1/5 ml-4">
-      <%= render 'shared/best_answer_ranking' %>
-    </aside>
-  </div>
+      <!-- サイドバー（右側） -->
+      <aside class="md:w-1/4 lg:w-1/5 ml-4">
+        <%= render 'shared/best_answer_ranking' %>
+      </aside>
+    </div>
 
     <footer class="bg-gray-100 py-4 text-center mt-auto">
       <div class="container mx-auto">
@@ -79,5 +94,18 @@
         </ul>
       </div>
     </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var input = document.getElementById("search-input");
+        if (input && input.dataset.list) {
+          new Awesomplete(input, {
+            list: input.dataset.list.split(",").map(item => item.trim()),
+            minChars: 1,
+            autoFirst: true
+          });
+        }
+      });
+    </script>
   </body>
 </html>
