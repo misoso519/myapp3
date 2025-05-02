@@ -20,71 +20,78 @@
 
     <style>
       .awesomplete > ul > li {
-        color: black; /* テキストの色を黒に */
+        color: black;
       }
-
       .awesomplete > ul > li:hover {
-        background-color: #9ca3af; /* grey-400 */
+        background-color: #9ca3af;
       }
     </style>
   </head>
 
-  <body class="bg-gray-100">
+  <body class="bg-gray-100 min-h-screen flex flex-col">
     <%= render "shared/loading_spinner" %>
+
     <!-- ヘッダー -->
     <header class="bg-blue-600 text-white py-4">
-      <div class="container mx-auto flex justify-between items-center">
+      <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
         <!-- ロゴ -->
-        <div class="logo">
-          <%= link_to "MyApp", root_path, class: "text-xl font-bold" %>
+        <div class="text-xl font-bold">
+          <%= link_to "MyApp", root_path, class: "text-white" %>
         </div>
 
-        <!-- 検索フォーム -->
-        <div class="search-form">
-          <%= form_with(url: questions_path, method: :get, local: true, class: "flex", data: { turbo: false }) do %>
-            <input id="search-input" type="text" name="q" value="<%= params[:q] %>" placeholder="Search..."
-                  autocomplete="on"
-                  class="awesomplete p-2 rounded-l-md border-none focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-                  style="color: black;" 
-                  data-list="<%= @categories.map(&:name).join(', ') %>, <%= @questions.map(&:title).join(', ') %>" />
-            <button type="submit" class="p-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-700">
-              Search
-            </button>
-          <% end %>        
-        </div>
+        <!-- ハンバーガーメニュー（スマホ用） -->
+        <button id="nav-toggle" class="block md:hidden text-white text-2xl focus:outline-none">
+          ☰
+        </button>
 
-        <!-- ナビゲーションリンク（ログイン、新規登録、カテゴリ一覧、質問登録） -->
-        <div class="nav-links flex space-x-4">
-          <%= link_to "使い方", how_to_use_path, class: "text-white" %> |
-          <%= link_to "Categories", categories_path, class: "text-white" %> |
-          <%= link_to "Ask Question", new_question_path, class: "text-white" %>
+        <!-- ナビゲーション -->
+        <div id="nav-menu" class="w-full mt-4 md:mt-0 md:flex md:items-center md:space-x-4 hidden">
+          <!-- 検索フォーム -->
+          <div class="w-full md:w-auto">
+            <%= form_with(url: questions_path, method: :get, local: true, class: "flex flex-col md:flex-row", data: { turbo: false }) do %>
+              <input id="search-input" type="text" name="q" value="<%= params[:q] %>" placeholder="Search..."
+                autocomplete="on"
+                class="awesomplete p-2 rounded-md md:rounded-r-none md:rounded-l-md border-none focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white w-full md:w-auto"
+                style="color: black;" 
+                data-list="<%= @categories.map(&:name).join(', ') %>, <%= @questions.map(&:title).join(', ') %>" />
+              <button type="submit" class="p-2 bg-blue-500 text-white rounded-md md:rounded-l-none md:rounded-r-md hover:bg-blue-700 mt-2 md:mt-0 md:ml-2">
+                Search
+              </button>
+            <% end %>        
+          </div>
 
-          <% if user_signed_in? %>
-            <div class="flex items-center space-x-4">
-              <!-- ユーザー名をクリック可能に -->
+          <!-- ナビゲーションリンク -->
+          <div class="mt-4 md:mt-0 flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0">
+            <%= link_to "使い方", how_to_use_path, class: "text-white" %>
+            <%= link_to "Categories", categories_path, class: "text-white" %>
+            <%= link_to "Ask Question", new_question_path, class: "text-white" %>
+
+            <% if user_signed_in? %>
               <%= link_to current_user.name, user_path(current_user), class: "text-white font-bold hover:underline" %>
-              <%= link_to 'Log Out', destroy_user_session_path, method: :get, data: { confirm: '本当にログアウトしますか？' }, class: "ml-4 text-white" %>
-            </div>
-          <% else %>
-            <%= link_to "Log In", new_user_session_path, class: "ml-4 text-white" %> |
-            <%= link_to "Sign Up", new_user_registration_path, class: "ml-4 text-white" %>
-          <% end %>
+              <%= link_to 'Log Out', destroy_user_session_path, method: :get, data: { confirm: '本当にログアウトしますか？' }, class: "text-white" %>
+            <% else %>
+              <%= link_to "Log In", new_user_session_path, class: "text-white" %>
+              <%= link_to "Sign Up", new_user_registration_path, class: "text-white" %>
+            <% end %>
+          </div>
         </div>
       </div>
     </header>
 
-    <div class="flex flex-1 container mx-auto mt-6 px-4">
-      <!-- メインコンテンツ -->
-      <main class="w-full md:w-3/4 lg:w-4/5">
-        <%= yield %>
-      </main>
+    <!-- コンテンツ -->
+    <div class="container mx-auto flex-1 mt-6 px-4">
+      <div class="flex flex-col md:flex-row">
+        <main class="w-full md:w-3/4 lg:w-4/5">
+          <%= yield %>
+        </main>
 
-      <!-- サイドバー（右側） -->
-      <aside class="md:w-1/4 lg:w-1/5 ml-4">
-        <%= render 'shared/best_answer_ranking' %>
-      </aside>
+        <aside class="w-full md:w-1/4 lg:w-1/5 mt-6 md:mt-0 md:ml-4">
+          <%= render 'shared/best_answer_ranking' %>
+        </aside>
+      </div>
     </div>
 
+    <!-- フッター -->
     <footer class="bg-gray-100 py-4 text-center mt-auto">
       <div class="container mx-auto">
         <ul class="flex justify-center space-x-4">
@@ -95,6 +102,7 @@
       </div>
     </footer>
 
+    <!-- オートコンプリートの初期化 -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         var input = document.getElementById("search-input");
@@ -103,6 +111,15 @@
             list: input.dataset.list.split(",").map(item => item.trim()),
             minChars: 1,
             autoFirst: true
+          });
+        }
+
+        // ハンバーガーメニューの開閉
+        const toggle = document.getElementById("nav-toggle");
+        const menu = document.getElementById("nav-menu");
+        if (toggle && menu) {
+          toggle.addEventListener("click", () => {
+            menu.classList.toggle("hidden");
           });
         }
       });
