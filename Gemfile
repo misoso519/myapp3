@@ -67,3 +67,5 @@ gem 'mini_magick'
 gem 'fog-aws'
 gem "dotenv-rails", "~> 3.1"
 gem 'aws-sdk-s3', require: false
+gem "omniauth-google-oauth2"
+gem "omniauth-rails_csrf_protection"

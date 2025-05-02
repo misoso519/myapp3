@@ -13,4 +13,6 @@ Devise.setup do |config|
   config.sign_out_via = :get
   config.responder.error_status = :unprocessable_entity
   config.responder.redirect_status = :see_other
+  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], skip_jwt: true
+  OmniAuth.config.logger = Rails.logger if Rails.env.development?  # debug用
 end
