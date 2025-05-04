@@ -1,0 +1,8 @@
+<h1 class="text-xl font-bold mb-4">通知一覧</h1>
+
+<% @notifications.each do |notification| %>
+  <div class="p-2 border-b <%= 'font-bold' unless notification.checked %>">
+    <%= link_to notification.message, polymorphic_path(notification.notifiable) %>
+    <span class="text-sm text-gray-500"><%= time_ago_in_words(notification.created_at) %>前</span>
+  </div>
+<% end %>

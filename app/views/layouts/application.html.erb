@@ -16,7 +16,7 @@
     <link rel="apple-touch-icon" href="/icon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js" defer></script>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload" %>
 
     <style>
       .awesomplete > ul > li {
@@ -36,7 +36,7 @@
       <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
         <!-- ロゴ -->
         <div class="text-xl font-bold">
-          <%= link_to "MyApp", root_path, class: "text-white" %>
+          <%= link_to "Teacher's", root_path, class: "text-white" %>
         </div>
 
         <!-- ハンバーガーメニュー（スマホ用） -->
@@ -67,6 +67,15 @@
             <%= link_to "Ask Question", new_question_path, class: "text-white" %>
 
             <% if user_signed_in? %>
+                <%= link_to notifications_path, class: "relative text-white hover:text-yellow-300" do %>
+                <span class="text-xl">🔔</span>
+                <% unread_count = current_user.notifications.unread.count %>
+                <% if unread_count > 0 %>
+                  <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full px-2">
+                    <%= unread_count %>
+                  </span>
+                <% end %>
+              <% end %>
               <%= link_to current_user.name, user_path(current_user), class: "text-white font-bold hover:underline" %>
               <%= link_to 'Log Out', destroy_user_session_path, method: :get, data: { confirm: '本当にログアウトしますか？' }, class: "text-white" %>
             <% else %>

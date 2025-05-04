@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "notifications/index"
   get "users/show"
   devise_for :users, controllers: {
     registrations: 'users/registrations',
@@ -7,6 +8,7 @@ Rails.application.routes.draw do
     omniauth_callbacks: "users/omniauth_callbacks"
   }
   resources :users, only: [:show]
+  resources :notifications, only: [:index]
 
   # PWA 関連
   get "service-worker", to: "rails/pwa#service_worker", as: :pwa_service_worker
