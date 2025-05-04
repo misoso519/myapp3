@@ -30,4 +30,8 @@ module Myapp
       pin "@hotwired/turbo-rails"
     end  
   end
+  config.middleware.insert_before 0, Rack::Redirect do
+    source 'http://kidsteachers.net'
+    destination 'http://www.kidsteachers.net'
+  end
 end
