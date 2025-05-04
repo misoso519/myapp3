@@ -1,9 +1,35 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+Category.create([
+  { name: "野球" },
+  { name: "サッカー" },
+  { name: "バスケットボール" },
+  { name: "バレーボール" },
+  { name: "テニス" },
+  { name: "ゴルフ" },
+  { name: "ラグビー" },
+  { name: "アメリカンフットボール" },
+  { name: "卓球" },
+  { name: "水泳" },
+  { name: "陸上" },
+  { name: "体操" },
+  { name: "スキー" },
+  { name: "スノーボード" },
+  { name: "フィギュアスケート" },
+  { name: "スケートボード" },
+  { name: "サーフィン" },
+  { name: "ボルダリング" },
+  { name: "クライミング" },
+  { name: "ダンス" },
+  { name: "水泳" },
+  { name: "バドミントン" },
+  { name: "格闘技" },
+  { name: "武道" },
+  { name: "自転車" },
+  { name: "マラソン" },
+  { name: "トライアスロン" },
+  { name: "アーチェリー" },
+  { name: "射撃" },
+  { name: "ハンドボール" },
+  { name: "ラクロス" },
+  { name: "ホッケー" },
+  { name: "その他" }
+])
