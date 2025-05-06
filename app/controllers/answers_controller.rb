@@ -19,6 +19,7 @@ class AnswersController < ApplicationController
   def edit
     @question = Question.find_by(id: params[:question_id])
     @answer = Answer.find_by(id: params[:id])
+    @answer = @question.answers.find(params[:id])
   end
 
   def update
