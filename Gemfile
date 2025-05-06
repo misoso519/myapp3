@@ -76,3 +76,7 @@ gem 'meta-tags'
 group :development, :test do
   gem 'rspec-rails'
 end
+
+group :development, :test do
+  gem 'rubocop', require: false
+end
