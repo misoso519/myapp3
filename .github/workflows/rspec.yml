@@ -1,49 +1,54 @@
-name: RSpec Tests
+name: Run RSpec tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [main]
   pull_request:
-    branches: [ "main" ]
+    branches: [main]
 
 jobs:
-  test:
+  rspec:
     runs-on: ubuntu-latest
 
     services:
-      postgres:
-        image: postgres:14
-        ports: ['5432:5432']
+      mysql:
+        image: mysql:8.0
+        ports: ['3306:3306']
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: test_db
         options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     env:
       RAILS_ENV: test
-      DATABASE_URL: postgres://postgres:password@localhost:5432/test
+      MYSQL_PASSWORD: password
+      DB_HOST: 127.0.0.1
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Check out code
+        uses: actions/checkout@v3
 
-      - uses: ruby/setup-ruby@v1
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3.6'
+          bundler-cache: true
 
       - name: Install dependencies
         run: |
-          gem install bundler
-          bundle install --jobs 4 --retry 3
+          sudo apt-get update -y
+          sudo apt-get install -y libmysqlclient-dev
+          bundle install
 
       - name: Set up database
         run: |
+          cp config/database.yml.github config/database.yml
           bin/rails db:create
           bin/rails db:schema:load
 
-      - name: Run tests
-        run: |
-          bundle exec rspec
+      - name: Run RSpec tests
+        run: bundle exec rspec
