@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :sns_credential, dependent: :destroy
   has_many :notifications, dependent: :destroy
+  has_many :sns_credentials, dependent: :destroy
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[google_oauth2]
