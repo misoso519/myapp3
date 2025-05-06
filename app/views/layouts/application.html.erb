@@ -91,6 +91,7 @@
     <div class="container mx-auto flex-1 mt-6 px-4">
       <div class="flex flex-col md:flex-row">
         <main class="w-full md:w-3/4 lg:w-4/5">
+        <%= breadcrumbs separator: " &raquo; " unless current_page?(root_path) %>
           <%= yield %>
         </main>
 

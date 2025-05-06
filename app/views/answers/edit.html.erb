@@ -1,3 +1,4 @@
+<% breadcrumb :edit_answer, @question, @answer %>
 <h1>回答の編集</h1>
 
 <%= form_with(model: [@question, @answer], local: true, html: { multipart: true }) do |f| %>
