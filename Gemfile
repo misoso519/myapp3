@@ -71,3 +71,4 @@ gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
 gem 'rack-rewrite'
 gem 'gretel'
+gem 'meta-tags'
