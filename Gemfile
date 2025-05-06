@@ -72,3 +72,7 @@ gem "omniauth-rails_csrf_protection"
 gem 'rack-rewrite'
 gem 'gretel'
 gem 'meta-tags'
+
+group :development, :test do
+  gem 'rspec-rails'
+end
